@@ -10,6 +10,12 @@
 
 * **npm:** `npm install react-interpose --save`
 
+```css
+h1 { color: var(--colour); }
+```
+
+By using the `map` property of the `StyleProperties` component &mdash; wrapping your component inside &mdash; the `--colour` variable can be dynamically applied:
+
 ```javascript
 import StyleProperties from 'react-interpose';
 
@@ -24,10 +30,4 @@ const Component = props => {
     );
 
 };
-```
-
-```css
-h1 {
-    color: var(--colour);
-}
 ```
