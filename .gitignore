@@ -1,0 +1,14 @@
+# os
+.DS_Store
+
+# npm / node / bower
+node_modules
+npm-debug.log
+example/vendor
+
+# ide
+.idea
+
+# build
+example/build.js
+
