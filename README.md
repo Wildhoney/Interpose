@@ -12,6 +12,8 @@
 
 ---
 
+## Getting Started
+
 ```css
 h1 { color: var(--colour); }
 ```
