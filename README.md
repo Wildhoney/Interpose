@@ -17,11 +17,14 @@ const Component = props => {
 
     return (
         <StyleProperties map={{ colour: props.colour }}>
-            <h1 className="header">Voila!</h1>
+            <h1 className="header">
+                Hello, Interpose
+            </h1>
         </StyleProperties>
     );
 
 };
+```
 
 ```css
 h1 {
