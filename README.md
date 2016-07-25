@@ -10,6 +10,8 @@
 
 * **npm:** `npm install react-interpose --save`
 
+---
+
 ```css
 h1 { color: var(--colour); }
 ```
