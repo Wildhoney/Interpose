@@ -36,9 +36,24 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.5",
+    "enzyme": "^2.4.1",
     "express": "^4.14.0",
+    "humps": "^1.1.0",
+    "jsdom": "^9.4.1",
     "react": "^15.2.1",
+    "react-addons-test-utils": "^15.2.1",
+    "react-dom": "^15.2.1",
     "tap-nyan": "0.0.2",
     "webpack": "^1.13.1"
+  },
+  "ava": {
+    "files": [
+      "tests/*.test.js"
+    ],
+    "babel": "inherit",
+    "require": [
+      "babel-register",
+      "./tests/helpers/setup-browser-env.js"
+    ]
   }
 }
