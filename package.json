@@ -1,0 +1,44 @@
+{
+  "name": "react-interpose",
+  "version": "0.1.0",
+  "description": "Apply stylesheet variables to your React components for use in your stylesheets. Interpose reduces the clutter of React components by bridging the gap between JS and CSS without resorting to complicating your components with CSS logic.",
+  "main": "dist/interpose.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wildhoney/Interpose.git"
+  },
+  "keywords": [
+    "css variables",
+    "css vars",
+    "react css",
+    "react css variables",
+    "stylesheet variables",
+    "sass variables",
+    "react",
+    "stylesheets",
+    "css",
+    "sass"
+  ],
+  "author": "Adam Timberlake <adam.timberlake@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wildhoney/Interpose/issues"
+  },
+  "homepage": "https://github.com/Wildhoney/Interpose#readme",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "babel": "^6.5.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.11.5",
+    "express": "^4.14.0",
+    "react": "^15.2.1",
+    "tap-nyan": "0.0.2",
+    "webpack": "^1.13.1"
+  }
+}
