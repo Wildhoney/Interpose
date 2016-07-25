@@ -93,7 +93,7 @@ module.exports =
 
 
 	        /**
-	         * @constant propTypes
+	         * @constant defaultProps
 	         * @type {Object}
 	         */
 	        value: function transform(props) {
@@ -123,12 +123,18 @@ module.exports =
 	         * @type {Array}
 	         */
 
+
+	        /**
+	         * @constant propTypes
+	         * @type {Object}
+	         */
+
 	    }, {
 	        key: 'render',
 	        value: function render() {
 
 	            return _react2.default.createElement(
-	                'span',
+	                this.props.tagName,
 	                null,
 	                _react2.default.createElement(
 	                    'style',
@@ -145,7 +151,11 @@ module.exports =
 
 	Interpose.propTypes = {
 	    map: _react.PropTypes.object.isRequired,
-	    children: _react.PropTypes.node.isRequired
+	    children: _react.PropTypes.node.isRequired,
+	    tagName: _react.PropTypes.string
+	};
+	Interpose.defaultProps = {
+	    tagName: 'span'
 	};
 	Interpose.attributes = [{ attr: 'id', symbol: '#' }, { attr: 'className', symbol: '.' }];
 	exports.default = Interpose;

@@ -14,7 +14,16 @@ export default class Interpose extends Component {
      */
     static propTypes = {
         map: PropTypes.object.isRequired,
-        children: PropTypes.node.isRequired
+        children: PropTypes.node.isRequired,
+        tagName: PropTypes.string
+    };
+
+    /**
+     * @constant defaultProps
+     * @type {Object}
+     */
+    static defaultProps = {
+        tagName: 'span'
     };
 
     /**
@@ -58,12 +67,12 @@ export default class Interpose extends Component {
 
         return (
 
-            <span>
+            <this.props.tagName>
                 <style type="text/css">
                     {this.transform(this.props.map)}
                 </style>
                 {this.props.children}
-            </span>
+            </this.props.tagName>
 
         );
 
