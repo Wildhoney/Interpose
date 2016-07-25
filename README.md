@@ -10,3 +10,21 @@
 
 * **npm:** `npm install react-interpose --save`
 
+```javascript
+import StyleProperties from 'react-interpose';
+
+const Component = props => {
+
+    return (
+        <StyleProperties map={{ colour: props.colour }}>
+            <h1 className="header">Voila!</h1>
+        </StyleProperties>
+    );
+
+};
+
+```css
+h1 {
+    color: var(--colour);
+}
+```
