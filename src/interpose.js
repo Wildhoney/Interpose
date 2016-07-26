@@ -60,7 +60,7 @@ export default class Interpose extends Component {
 
         return `
             ${selector} { ${Object.keys(props).map(key => {
-                const name = decamelize(key, {separator: '-'});
+                const name = decamelize(key, { separator: '-' });
                 return `--${name}: ${props[key]}; `;
             }).join('')}}
         `.trim();
@@ -83,7 +83,7 @@ export default class Interpose extends Component {
 
             }
 
-        }});
+        } });
 
     }
 }

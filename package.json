@@ -5,7 +5,9 @@
   "main": "dist/interpose.js",
   "scripts": {
     "build": "webpack",
-    "test": "ava"
+    "test": "npm run lint && npm run spec",
+    "lint": "xo src/interpose.js",
+    "spec": "ava"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,9 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.5",
     "enzyme": "^2.4.1",
+    "eslint-config-xo-react": "^0.8.0",
+    "eslint-plugin-react": "^5.1.1",
+    "eslint-plugin-xo": "^0.5.1",
     "express": "^4.14.0",
     "humps": "^1.1.0",
     "jsdom": "^9.4.1",
@@ -45,7 +50,8 @@
     "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.2.1",
     "tap-nyan": "0.0.2",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "xo": "^0.16.0"
   },
   "ava": {
     "files": [
@@ -56,5 +62,41 @@
       "babel-register",
       "./tests/helpers/setup-browser-env.js"
     ]
+  },
+  "xo": {
+    "space": 4,
+    "esnext": true,
+    "globals": [
+      "window",
+      "document"
+    ],
+    "extends": "xo-react",
+    "rules": {
+      "padded-blocks": "off",
+      "max-lines": [
+        2,
+        500
+      ],
+      "babel/object-curly-spacing": [
+        2,
+        "always"
+      ],
+      "babel/array-bracket-spacing": "off",
+      "no-unused-vars": [
+        1
+      ],
+      "max-nested-callbacks": [
+        1,
+        5
+      ],
+      "default-case": "off",
+      "no-unused-expressions": "off",
+      "no-case-declarations": "off",
+      "import/no-named-as-default": "off",
+      "react/jsx-indent": "off",
+      "react/jsx-space-before-closing": "off",
+      "react/no-danger": "off",
+      "react/jsx-no-bind": "off"
+    }
   }
 }
