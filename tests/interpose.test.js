@@ -39,31 +39,35 @@ test('It should be able to render the CSS map and modify the values;', t => {
 
 	const { header, styles, map, wrapper, propsToStyles } = mountFromProps();
 
-    t.is(styles.text(), `h1 { ${propsToStyles(map)} }`);
-    t.is(header.text(), 'Voila!');
+	t.is(styles.text(), `h1 { ${propsToStyles(map)} }`);
+	t.is(header.text(), 'Voila!');
 
 	const updatedMap = { ...map, colour: 'green' };
-    wrapper.setProps({ map: updatedMap });
+	wrapper.setProps({ map: updatedMap });
 	t.is(styles.text(), `h1 { ${propsToStyles(updatedMap)} }`);
 
 });
 
 test('It should be able to render the CSS map for a root component;', t => {
-	const { styles, map, propsToStyles } = mountFromProps({ className: 'test' }, true);
+	const { header, styles, map, propsToStyles } = mountFromProps({ className: 'test' }, true);
 	t.is(styles.text(), `:root { ${propsToStyles(map)} }`);
+	t.is(header.text(), 'Voila!');
 });
 
 test('It should be able to render the CSS map for a class component;', t => {
-	const { styles, map, propsToStyles } = mountFromProps({ className: 'test' });
+	const { header, styles, map, propsToStyles } = mountFromProps({ className: 'test' });
 	t.is(styles.text(), `h1.test { ${propsToStyles(map)} }`);
+	t.is(header.text(), 'Voila!');
 });
 
 test('It should be able to render the CSS map for an ID component;', t => {
-	const { styles, map, propsToStyles } = mountFromProps({ id: 'test' });
+	const { header, styles, map, propsToStyles } = mountFromProps({ id: 'test' });
 	t.is(styles.text(), `h1#test { ${propsToStyles(map)} }`);
+	t.is(header.text(), 'Voila!');
 });
 
 test('It should be able to render the CSS map for a class and ID component;', t => {
-	const { styles, map, propsToStyles } = mountFromProps({ id: 'test-id', className: 'test-class' });
+	const { header, styles, map, propsToStyles } = mountFromProps({ id: 'test-id', className: 'test-class' });
 	t.is(styles.text(), `h1#test-id.test-class { ${propsToStyles(map)} }`);
+	t.is(header.text(), 'Voila!');
 });
