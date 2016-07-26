@@ -100,7 +100,7 @@ module.exports =
 	        }
 
 	        /**
-	         * @method transform
+	         * @method propsToSelector
 	         * @param {Object} props
 	         * @return {String}
 	         */
@@ -118,21 +118,34 @@ module.exports =
 	         */
 
 	    }, {
-	        key: 'transform',
-	        value: function transform(props) {
+	        key: 'propsToSelector',
+	        value: function propsToSelector(props) {
 	            var children = this.props.children;
 
 	            // Determine the selector name based on the node's attributes.
 
-	            var selector = Interpose.attributes.reduce(function (accumulator, model) {
+	            var selector = this.props.isRoot ? ':root' : Interpose.attributes.reduce(function (accumulator, model) {
 	                var hasAttr = children.props[model.attr];
 	                return hasAttr ? '' + accumulator + model.symbol + children.props[model.attr] : accumulator;
 	            }, children.type);
 
-	            return ('\n            ' + selector + ' { ' + Object.keys(props).map(function (key) {
+	            return ('\n            ' + selector + ' { ' + this.propsToStyles(props) + ' }\n        ').trim();
+	        }
+
+	        /**
+	         * @method styles
+	         * @param {Object} props
+	         * @return {String}
+	         */
+
+	    }, {
+	        key: 'propsToStyles',
+	        value: function propsToStyles(props) {
+
+	            return '' + Object.keys(props).map(function (key) {
 	                var name = (0, _humps.decamelize)(key, { separator: '-' });
 	                return '--' + name + ': ' + props[key] + '; ';
-	            }).join('') + '}\n        ').trim();
+	            }).join('').trim();
 	        }
 
 	        /**
@@ -150,7 +163,7 @@ module.exports =
 	                    if (childElement) {
 
 	                        _this2.styleElement.setAttribute('type', 'text/css');
-	                        _this2.styleElement.innerHTML = _this2.transform(_this2.props.map);
+	                        _this2.styleElement.innerHTML = _this2.propsToSelector(_this2.props.map);
 	                        childElement.insertBefore(_this2.styleElement, childElement.childNodes[0]);
 	                    }
 	                } });
@@ -163,10 +176,10 @@ module.exports =
 	Interpose.propTypes = {
 	    map: _react.PropTypes.object.isRequired,
 	    children: _react.PropTypes.node.isRequired,
-	    tagName: _react.PropTypes.string
+	    isRoot: _react.PropTypes.bool
 	};
 	Interpose.defaultProps = {
-	    tagName: 'span'
+	    isRoot: false
 	};
 	Interpose.attributes = [{ attr: 'id', symbol: '#' }, { attr: 'className', symbol: '.' }];
 	exports.default = Interpose;
