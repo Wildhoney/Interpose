@@ -44,11 +44,11 @@ export default class Interpose extends Component {
     }
 
     /**
-     * @method transform
+     * @method propsToSelector
      * @param {Object} props
      * @return {String}
      */
-    transform(props) {
+    propsToSelector(props) {
 
         const { children } = this.props;
 
@@ -59,11 +59,22 @@ export default class Interpose extends Component {
         }, children.type);
 
         return `
-            ${selector} { ${Object.keys(props).map(key => {
-                const name = decamelize(key, { separator: '-' });
-                return `--${name}: ${props[key]}; `;
-            }).join('')}}
+            ${selector} { ${this.propsToStyles(props)} }
         `.trim();
+
+    }
+
+    /**
+     * @method styles
+     * @param {Object} props
+     * @return {String}
+     */
+    propsToStyles(props) {
+
+        return `${Object.keys(props).map(key => {
+            const name = decamelize(key, { separator: '-' });
+            return `--${name}: ${props[key]}; `;
+        }).join('').trim()}`;
 
     }
 
@@ -78,7 +89,7 @@ export default class Interpose extends Component {
             if (childElement) {
 
                 this.styleElement.setAttribute('type', 'text/css');
-                this.styleElement.innerHTML = this.transform(this.props.map);
+                this.styleElement.innerHTML = this.propsToSelector(this.props.map);
                 childElement.insertBefore(this.styleElement, childElement.childNodes[0]);
 
             }

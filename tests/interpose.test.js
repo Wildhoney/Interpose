@@ -3,114 +3,67 @@ import test from 'ava';
 import { mount } from 'enzyme';
 import StyleProperties from '../src/interpose';
 
-test.beforeEach(t => {
+/**
+ * @method mountFromProps
+ * @param {Object} [nodeAttrs = {}]
+ * @param {Boolean} [isRoot = false]
+ * @return {Object}
+ */
+const mountFromProps = (nodeAttrs = {}, isRoot = false) => {
 
-	t.context.styleMap = { width: '500px', colour: 'red', fontFamily: 'Arial' };
-	
-	t.context.Component = props => {
-		return (
-			<StyleProperties map={props.map}>
-				<h1><span>Voila!</span></h1>
-			</StyleProperties>
-		);
+	/**
+	 * @constant map
+	 * @type {Object}
+	 */
+	const map = { width: '500px', colour: 'red', fontFamily: 'Arial' };
+
+	const Component = props => (
+		<StyleProperties map={props.map} isRoot={isRoot}>
+			<h1 {...nodeAttrs}><span>Voila!</span></h1>
+		</StyleProperties>
+	);
+
+	const wrapper = mount(<Component map={map} />);
+
+	return {
+		map,
+		wrapper,
+		header: wrapper.find('h1').find('span'),
+		styles: { text: () => wrapper.find('h1').node.querySelector('style').innerHTML },
+		propsToStyles: StyleProperties.prototype.propsToStyles
 	};
-	
-	t.context.RootComponent = props => {
-		return (
-			<StyleProperties map={props.map} isRoot={true}>
-				<h1 className="header"><span>Voila!</span></h1>
-			</StyleProperties>
-		);
-	};
-	
-	t.context.ClassComponent = props => {
-		return (
-			<StyleProperties map={props.map}>
-				<h1 className="header"><span>Voila!</span></h1>
-			</StyleProperties>
-		);
-	};
-	
-	t.context.IDComponent = props => {
-		return (
-			<StyleProperties map={props.map}>
-				<h1 id="header"><span>Voila!</span></h1>
-			</StyleProperties>
-		);
-	};
-	
-	t.context.ClassIDComponent = props => {
-		return (
-			<StyleProperties map={props.map}>
-				<h1 className="my-header" id="header"><span>Voila!</span></h1>
-			</StyleProperties>
-		);
-	};
-	
-});
 
-test('It should be able to render the CSS map;', t => {
+};
 
-	const { Component, styleMap } = t.context;
+test('It should be able to render the CSS map and modify the values;', t => {
 
-    const wrapper = mount(<Component map={styleMap} />);
-    const h1Element = wrapper.find('h1');
+	const { header, styles, map, wrapper, propsToStyles } = mountFromProps();
 
-    const styleOne = h1Element.node.querySelector('style');
-    t.is(styleOne.innerHTML, `h1 { --width: 500px; --colour: red; --font-family: Arial; }`);
-    t.is(h1Element.find('span').text(), 'Voila!');
+    t.is(styles.text(), `h1 { ${propsToStyles(map)} }`);
+    t.is(header.text(), 'Voila!');
 
-    wrapper.setProps({ map: { ...styleMap, colour: 'green' }});
-    const styleTwo = h1Element.node.querySelector('style');
-    t.is(styleTwo.innerHTML, `h1 { --width: 500px; --colour: green; --font-family: Arial; }`);
+	const updatedMap = { ...map, colour: 'green' };
+    wrapper.setProps({ map: updatedMap });
+	t.is(styles.text(), `h1 { ${propsToStyles(updatedMap)} }`);
 
 });
 
 test('It should be able to render the CSS map for a root component;', t => {
-
-	const { RootComponent, styleMap } = t.context;
-
-    const wrapper = mount(<RootComponent map={styleMap} />);
-    const h1Element = wrapper.find('h1');
-
-    const styleOne = h1Element.node.querySelector('style');
-    t.is(styleOne.innerHTML, `:root { --width: 500px; --colour: red; --font-family: Arial; }`);
-
+	const { styles, map, propsToStyles } = mountFromProps({ className: 'test' }, true);
+	t.is(styles.text(), `:root { ${propsToStyles(map)} }`);
 });
 
 test('It should be able to render the CSS map for a class component;', t => {
-
-	const { ClassComponent, styleMap } = t.context;
-
-    const wrapper = mount(<ClassComponent map={styleMap} />);
-    const h1Element = wrapper.find('h1');
-
-    const styleOne = h1Element.node.querySelector('style');
-    t.is(styleOne.innerHTML, `h1.header { --width: 500px; --colour: red; --font-family: Arial; }`);
-
+	const { styles, map, propsToStyles } = mountFromProps({ className: 'test' });
+	t.is(styles.text(), `h1.test { ${propsToStyles(map)} }`);
 });
 
 test('It should be able to render the CSS map for an ID component;', t => {
-
-	const { IDComponent, styleMap } = t.context;
-
-    const wrapper = mount(<IDComponent map={styleMap} />);
-    const h1Element = wrapper.find('h1');
-
-    const styleOne = h1Element.node.querySelector('style');
-    t.is(styleOne.innerHTML, `h1#header { --width: 500px; --colour: red; --font-family: Arial; }`);
-
+	const { styles, map, propsToStyles } = mountFromProps({ id: 'test' });
+	t.is(styles.text(), `h1#test { ${propsToStyles(map)} }`);
 });
 
 test('It should be able to render the CSS map for a class and ID component;', t => {
-
-	const { ClassIDComponent, styleMap } = t.context;
-
-    const wrapper = mount(<ClassIDComponent map={styleMap} />);
-    const h1Element = wrapper.find('h1');
-
-    const styleOne = h1Element.node.querySelector('style');
-    t.is(styleOne.innerHTML, `h1#header.my-header { --width: 500px; --colour: red; --font-family: Arial; }`);
-
+	const { styles, map, propsToStyles } = mountFromProps({ id: 'test-id', className: 'test-class' });
+	t.is(styles.text(), `h1#test-id.test-class { ${propsToStyles(map)} }`);
 });
-
