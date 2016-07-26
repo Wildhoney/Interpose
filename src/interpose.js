@@ -15,7 +15,7 @@ export default class Interpose extends Component {
     static propTypes = {
         map: PropTypes.object.isRequired,
         children: PropTypes.node.isRequired,
-        tagName: PropTypes.string
+        isRoot: PropTypes.bool
     };
 
     /**
@@ -23,7 +23,7 @@ export default class Interpose extends Component {
      * @type {Object}
      */
     static defaultProps = {
-        tagName: 'span'
+        isRoot: false
     };
 
     /**
@@ -53,7 +53,7 @@ export default class Interpose extends Component {
         const { children } = this.props;
 
         // Determine the selector name based on the node's attributes.
-        const selector = Interpose.attributes.reduce((accumulator, model) => {
+        const selector = this.props.isRoot ? ':root' : Interpose.attributes.reduce((accumulator, model) => {
             const hasAttr = children.props[model.attr];
             return hasAttr ? `${accumulator}${model.symbol}${children.props[model.attr]}` : accumulator;
         }, children.type);
