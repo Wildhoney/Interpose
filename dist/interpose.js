@@ -82,13 +82,12 @@ module.exports =
 	    }
 
 	    _createClass(Interpose, [{
-	        key: 'transform',
+	        key: 'componentWillMount',
 
 
 	        /**
-	         * @method transform
-	         * @param {Object} props
-	         * @return {String}
+	         * @method componentWillMount
+	         * @return {void}
 	         */
 
 
@@ -96,25 +95,14 @@ module.exports =
 	         * @constant defaultProps
 	         * @type {Object}
 	         */
-	        value: function transform(props) {
-	            var children = this.props.children;
-
-	            // Determine the selector name based on the node's attributes.
-
-	            var selector = Interpose.attributes.reduce(function (accumulator, model) {
-	                var hasAttr = children.props[model.attr];
-	                return hasAttr ? '' + accumulator + model.symbol + children.props[model.attr] : accumulator;
-	            }, children.type);
-
-	            return ('\n            ' + selector + ' { ' + Object.keys(props).map(function (key) {
-	                var name = (0, _humps.decamelize)(key, { separator: '-' });
-	                return '--' + name + ': \'' + props[key] + '\'; ';
-	            }).join('') + '}\n        ').trim();
+	        value: function componentWillMount() {
+	            this.styleElement = document.createElement('style');
 	        }
 
 	        /**
-	         * @method render
-	         * @return {XML}
+	         * @method transform
+	         * @param {Object} props
+	         * @return {String}
 	         */
 
 
@@ -130,19 +118,42 @@ module.exports =
 	         */
 
 	    }, {
+	        key: 'transform',
+	        value: function transform(props) {
+	            var children = this.props.children;
+
+	            // Determine the selector name based on the node's attributes.
+
+	            var selector = Interpose.attributes.reduce(function (accumulator, model) {
+	                var hasAttr = children.props[model.attr];
+	                return hasAttr ? '' + accumulator + model.symbol + children.props[model.attr] : accumulator;
+	            }, children.type);
+
+	            return ('\n            ' + selector + ' { ' + Object.keys(props).map(function (key) {
+	                var name = (0, _humps.decamelize)(key, { separator: '-' });
+	                return '--' + name + ': ' + props[key] + '; ';
+	            }).join('') + '}\n        ').trim();
+	        }
+
+	        /**
+	         * @method render
+	         * @return {XML}
+	         */
+
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
 
-	            return _react2.default.createElement(
-	                this.props.tagName,
-	                null,
-	                _react2.default.createElement(
-	                    'style',
-	                    { type: 'text/css' },
-	                    this.transform(this.props.map)
-	                ),
-	                this.props.children
-	            );
+	            return (0, _react.cloneElement)(this.props.children, { ref: function ref(childElement) {
+
+	                    if (childElement) {
+
+	                        _this2.styleElement.setAttribute('type', 'text/css');
+	                        _this2.styleElement.innerHTML = _this2.transform(_this2.props.map);
+	                        childElement.insertBefore(_this2.styleElement, childElement.childNodes[0]);
+	                    }
+	                } });
 	        }
 	    }]);
 
