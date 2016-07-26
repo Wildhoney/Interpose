@@ -15,7 +15,7 @@ const mountFromProps = (nodeAttrs = {}, isRoot = false) => {
 	 * @constant map
 	 * @type {Object}
 	 */
-	const map = { width: '500px', colour: 'red', fontFamily: 'Arial' };
+	const map = { width: `${Math.ceil(Math.random() * 100)}px`, colour: 'red', fontFamily: 'Arial' };
 
 	const Component = props => (
 		<StyleProperties map={props.map} isRoot={isRoot}>
