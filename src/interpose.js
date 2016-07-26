@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 import { decamelize } from 'humps';
 
 /**
@@ -36,6 +36,14 @@ export default class Interpose extends Component {
     ];
 
     /**
+     * @method componentWillMount
+     * @return {void}
+     */
+    componentWillMount() {
+        this.styleElement = document.createElement('style');
+    }
+
+    /**
      * @method transform
      * @param {Object} props
      * @return {String}
@@ -53,7 +61,7 @@ export default class Interpose extends Component {
         return `
             ${selector} { ${Object.keys(props).map(key => {
                 const name = decamelize(key, {separator: '-'});
-                return `--${name}: '${props[key]}'; `;
+                return `--${name}: ${props[key]}; `;
             }).join('')}}
         `.trim();
 
@@ -65,17 +73,17 @@ export default class Interpose extends Component {
      */
     render() {
 
-        return (
+        return cloneElement(this.props.children, { ref: childElement => {
 
-            <this.props.tagName>
-                <style type="text/css">
-                    {this.transform(this.props.map)}
-                </style>
-                {this.props.children}
-            </this.props.tagName>
+            if (childElement) {
 
-        );
+                this.styleElement.setAttribute('type', 'text/css');
+                this.styleElement.innerHTML = this.transform(this.props.map);
+                childElement.insertBefore(this.styleElement, childElement.childNodes[0]);
+
+            }
+
+        }});
 
     }
-
 }

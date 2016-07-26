@@ -7,22 +7,26 @@ test('It should be able to render the CSS variables passed as props;', t => {
 
     const styleMap = { width: '500px', colour: 'red', fontFamily: 'Arial' };
 
-    const TestComponent = props => {
+    const Component = props => {
 
         return (
             <StyleProperties map={props.map}>
-                <h1 className="header">Voila!</h1>
+                <h1 className="header"><span>Voila!</span></h1>
             </StyleProperties>
         );
 
     };
 
-    const wrapper = mount(<TestComponent map={styleMap} />);
-    const style = wrapper.find('style');
+    const wrapper = mount(<Component map={styleMap} />);
+    const h1Element = wrapper.find('h1');
 
-    t.is(style.text(), `h1.header { --width: '500px'; --colour: 'red'; --font-family: 'Arial'; }`);
+    const styleOne = h1Element.node.querySelector('style');
+    t.is(styleOne.innerHTML, `h1.header { --width: 500px; --colour: red; --font-family: Arial; }`);
+    t.is(h1Element.find('span').text(), 'Voila!');
 
     wrapper.setProps({ map: { ...styleMap, colour: 'green' }});
-    t.is(style.text(), `h1.header { --width: '500px'; --colour: 'green'; --font-family: 'Arial'; }`);
+    const styleTwo = h1Element.node.querySelector('style');
+    t.is(styleTwo.innerHTML, `h1.header { --width: 500px; --colour: green; --font-family: Arial; }`);
+
 
 });
