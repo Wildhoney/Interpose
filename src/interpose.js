@@ -2,6 +2,22 @@ import React, { Component, PropTypes, cloneElement } from 'react';
 import { decamelize } from 'humps';
 
 /**
+ * Maps an object to CSS variables by transforming the key according to the CSS specification.
+ *
+ * @method styles
+ * @param {Object} props
+ * @return {String}
+ */
+export function propsToStyles(props) {
+
+    return `${Object.keys(props).map(key => {
+        const name = decamelize(key, { separator: '-' });
+        return `--${name}: ${props[key]}; `;
+    }).join('').trim()}`;
+
+}
+
+/**
  * @author Adam Timberlake
  * @class Interpose
  * @extends Component
@@ -59,23 +75,7 @@ export default class Interpose extends Component {
             return hasAttr ? `${accumulator}${model.symbol}${children.props[model.attr]}` : accumulator;
         }, children.type);
 
-        return `${selector} { ${this.propsToStyles(props)} }`.trim();
-
-    }
-
-    /**
-     * Maps an object to CSS variables by transforming the key according to the CSS specification.
-     *
-     * @method styles
-     * @param {Object} props
-     * @return {String}
-     */
-    propsToStyles(props) {
-
-        return `${Object.keys(props).map(key => {
-            const name = decamelize(key, { separator: '-' });
-            return `--${name}: ${props[key]}; `;
-        }).join('').trim()}`;
+        return `${selector} { ${propsToStyles(props)} }`.trim();
 
     }
 

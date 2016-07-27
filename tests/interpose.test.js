@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import test from 'ava';
 import { mount } from 'enzyme';
-import StyleProperties from '../src/interpose';
+import StyleProperties, { propsToStyles } from '../src/interpose';
 
 /**
  * @method mountFromProps
@@ -30,7 +30,7 @@ const mountFromProps = (nodeAttrs = {}, isRoot = false) => {
 		wrapper,
 		header: wrapper.find('h1').find('span'),
 		styles: { text: () => wrapper.find('h1').node.querySelector('style').innerHTML },
-		propsToStyles: StyleProperties.prototype.propsToStyles
+		propsToStyles
 	};
 
 };
