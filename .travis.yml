@@ -8,6 +8,7 @@ node_js:
 
 before_deploy:
   - npm run build
+  - npm run dev
 
 sudo: false
 
