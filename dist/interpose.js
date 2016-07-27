@@ -100,6 +100,8 @@ module.exports =
 	        }
 
 	        /**
+	         * Determine the selector name based on the node's attributes as defined in the `attributes` constant.
+	         *
 	         * @method propsToSelector
 	         * @param {Object} props
 	         * @return {String}
@@ -122,17 +124,18 @@ module.exports =
 	        value: function propsToSelector(props) {
 	            var children = this.props.children;
 
-	            // Determine the selector name based on the node's attributes.
 
 	            var selector = this.props.isRoot ? ':root' : Interpose.attributes.reduce(function (accumulator, model) {
 	                var hasAttr = children.props[model.attr];
 	                return hasAttr ? '' + accumulator + model.symbol + children.props[model.attr] : accumulator;
 	            }, children.type);
 
-	            return ('\n            ' + selector + ' { ' + this.propsToStyles(props) + ' }\n        ').trim();
+	            return (selector + ' { ' + this.propsToStyles(props) + ' }').trim();
 	        }
 
 	        /**
+	         * Maps an object to CSS variables by transforming the key according to the CSS specification.
+	         *
 	         * @method styles
 	         * @param {Object} props
 	         * @return {String}
