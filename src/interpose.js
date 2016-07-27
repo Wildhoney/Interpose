@@ -44,6 +44,8 @@ export default class Interpose extends Component {
     }
 
     /**
+     * Determine the selector name based on the node's attributes as defined in the `attributes` constant.
+     *
      * @method propsToSelector
      * @param {Object} props
      * @return {String}
@@ -52,19 +54,18 @@ export default class Interpose extends Component {
 
         const { children } = this.props;
 
-        // Determine the selector name based on the node's attributes.
         const selector = this.props.isRoot ? ':root' : Interpose.attributes.reduce((accumulator, model) => {
             const hasAttr = children.props[model.attr];
             return hasAttr ? `${accumulator}${model.symbol}${children.props[model.attr]}` : accumulator;
         }, children.type);
 
-        return `
-            ${selector} { ${this.propsToStyles(props)} }
-        `.trim();
+        return `${selector} { ${this.propsToStyles(props)} }`.trim();
 
     }
 
     /**
+     * Maps an object to CSS variables by transforming the key according to the CSS specification.
+     *
      * @method styles
      * @param {Object} props
      * @return {String}
