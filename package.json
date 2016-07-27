@@ -5,6 +5,7 @@
   "main": "dist/interpose.js",
   "scripts": {
     "build": "webpack",
+    "dev": "webpack --config webpack-dev.config.js",
     "test": "npm run lint && npm run spec",
     "lint": "xo src/interpose.js",
     "spec": "ava --tap | tap-nyan"
@@ -48,6 +49,7 @@
     "jsdom": "^9.4.1",
     "react": "^15.2.1",
     "react-addons-test-utils": "^15.2.1",
+    "react-color": "^2.2.2",
     "react-dom": "^15.2.1",
     "tap-nyan": "0.0.2",
     "webpack": "^1.13.1",

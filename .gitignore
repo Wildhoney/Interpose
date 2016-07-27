@@ -10,5 +10,4 @@ example/vendor
 .idea
 
 # build
-example/build.js
-
+example/js/build.js

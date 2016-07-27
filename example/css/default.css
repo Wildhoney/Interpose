@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body, section {
+    width: 100%;
+    height: 100%;
+}
+
+section.theme {
+    background-color: var(--theme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all 1s;
+}
+
+section.theme h1 {
+    font-family: Lato, Arial, Tahoma, Helvetica, sans-serif;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .25);
+    font-size: 2rem;
+}
+
+section.theme h2 {
+    font-family: "Times New Roman", Times, serif;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .25);
+    font-size: .65rem;
+    color: white;
+    padding: .5rem 0 1rem 0;
+    font-weight: normal;
+    font-style: italic;
+}

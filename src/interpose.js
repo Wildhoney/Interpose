@@ -85,7 +85,9 @@ export default class Interpose extends Component {
      */
     render() {
 
-        return cloneElement(this.props.children, { ref: childElement => {
+        const child = React.Children.only(this.props.children);
+
+        return cloneElement(child, { ref: childElement => {
 
             if (childElement) {
 
