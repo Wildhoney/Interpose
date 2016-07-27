@@ -53,6 +53,8 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	exports.propsToStyles = propsToStyles;
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -68,10 +70,26 @@ module.exports =
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
+	 * Maps an object to CSS variables by transforming the key according to the CSS specification.
+	 *
+	 * @method styles
+	 * @param {Object} props
+	 * @return {String}
+	 */
+	function propsToStyles(props) {
+
+	    return '' + Object.keys(props).map(function (key) {
+	        var name = (0, _humps.decamelize)(key, { separator: '-' });
+	        return '--' + name + ': ' + props[key] + '; ';
+	    }).join('').trim();
+	}
+
+	/**
 	 * @author Adam Timberlake
 	 * @class Interpose
 	 * @extends Component
 	 */
+
 	var Interpose = function (_Component) {
 	    _inherits(Interpose, _Component);
 
@@ -130,25 +148,7 @@ module.exports =
 	                return hasAttr ? '' + accumulator + model.symbol + children.props[model.attr] : accumulator;
 	            }, children.type);
 
-	            return (selector + ' { ' + this.propsToStyles(props) + ' }').trim();
-	        }
-
-	        /**
-	         * Maps an object to CSS variables by transforming the key according to the CSS specification.
-	         *
-	         * @method styles
-	         * @param {Object} props
-	         * @return {String}
-	         */
-
-	    }, {
-	        key: 'propsToStyles',
-	        value: function propsToStyles(props) {
-
-	            return '' + Object.keys(props).map(function (key) {
-	                var name = (0, _humps.decamelize)(key, { separator: '-' });
-	                return '--' + name + ': ' + props[key] + '; ';
-	            }).join('').trim();
+	            return (selector + ' { ' + propsToStyles(props) + ' }').trim();
 	        }
 
 	        /**
