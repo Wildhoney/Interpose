@@ -13,6 +13,8 @@ sudo: false
 
 deploy:
   provider: heroku
+  all_branches: true
+  skip_cleanup: true
   api_key:
     secure: e++8edZXnx1EoyDQKSvXzraGwg6py4tdWDcFHiLaCqC1/wDgsv7093SCroTgVwHnBZ6d9R33WsMCIVDO+E8DJhq+u91X7uVcnCg+ad+YTKdahwuRzTTkxvrqhHSlgzA7Z7JuwAKEmEcdwADT/iKLv3MDX/QnClj1FcgyKLXsUNt3s2BknV0CT4WFlps2IZPLzs/m9wybRa4OqrQi5aDmFqdUaHyox8R6egf+WdAmPfjSVKlNXDtrhvud7HXI3LMROvgq+jkIJ/rn8WyZLO46+tHL1uaQPxjU7K6v62mdl585NhbSdyUm8VQS8Gg4FkQNvz/3HaGB9cEFjGFAUt3uZStXa7xGvbH0QSQ4pxvOjOnKe0sjmUCN/TkXDtyosAI+uUiwoT5nrJ/4ue17QCv4AkgHNZa0e7sP6lB+Mys+7eQIleLvf4JmzjhQGCGYdij+P50Qq5rXUph8d07+VYwAPBIBnml7yemyartOh37cJgCd4LozVr3Fn+ueYHy+cpMMgWQxKK0aII9RmlK1AhSaZCqnI54Nd4CkUdXQ0aGYyBRMEpDBjZdqKS2T4HhG8d2uE7I8qDPJEIaJDv6l5LvXaOj9M9iBjWDA5N+0lWPQPL4HJVabUabgAXNREZJtcf1h+zOFpKumpVs2CGeZ2Zzf1LvxFna/dBk3sY9z6dc5E+Y=
   app: react-interpose
