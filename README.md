@@ -10,8 +10,6 @@
 
 * **npm:** `npm install react-interpose --save`
 
-<img src="media/screenshot.png" width="400" />
-
 ---
 
 ## Getting Started
@@ -41,6 +39,8 @@ const Component = props => {
 ```
 
 All of the `style` elements are placed alongside your component's markup. By default the <kbd>className</kbd> and <kbd>id</kbd> attributes are taken into consideration when generating the selector to house the CSS variables &mdash; however you can target `:root` &mdash; which is highly useful when used on conjunction with [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) &mdash; by supplying `isRoot={true}` property to the `StyleProperties` component.
+
+<img src="media/screenshot.png" />
 
 It's worth noting that any camel cased properties will be hyphenated &ndash; thus `colourTheme` will be transformed into `--colour-theme`.
 
