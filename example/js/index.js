@@ -25,7 +25,7 @@ class Theme extends Component {
                 <section className="theme">
 
                     <h1>Hello Interpose!</h1>
-                    <h2>Try changing the theme colour, and then inspecting the CSS variable&hellip;</h2>
+                    <h2>Try changing the theme colour, and then inspect the CSS variable&hellip;</h2>
 
                     <SwatchesPicker
                         color={this.state.colour}

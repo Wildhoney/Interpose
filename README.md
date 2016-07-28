@@ -10,6 +10,8 @@
 
 * **npm:** `npm install react-interpose --save`
 
+<img src="media/screenshot.png" width="400" />
+
 ---
 
 ## Getting Started
