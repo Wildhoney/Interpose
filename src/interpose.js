@@ -4,7 +4,7 @@ import { decamelize } from 'humps';
 /**
  * Maps an object to CSS variables by transforming the key according to the CSS specification.
  *
- * @method styles
+ * @method propsToStyles
  * @param {Object} props
  * @return {String}
  */
